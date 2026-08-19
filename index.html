@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EduStar Kids 🇮🇳</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+font-family:Arial,"Noto Sans Devanagari",sans-serif;
+background:linear-gradient(135deg,#101936,#302060,#082b3c);
+color:#fff;min-height:100vh
+}
+button,input{font:inherit}
+button{cursor:pointer;border:0}
+
+header{
+position:sticky;top:0;z-index:1000;
+display:flex;justify-content:space-between;align-items:center;
+padding:14px 18px;
+background:linear-gradient(135deg,#693cff,#a734ef);
+box-shadow:0 5px 25px #0007
+}
+.logo{font-size:27px;font-weight:900}
+.logo b{color:#ffd329}
+.stars{
+background:#ffffff20;padding:9px 15px;border-radius:30px;
+font-weight:bold
+}
+
+.container{width:min(1200px,94%);margin:auto;padding:20px 0 50px}
+
+.hero{
+text-align:center;padding:25px 5px
+}
+.hero h1{font-size:clamp(34px,7vw,60px)}
+.hero p{color:#dce0ff;margin-top:8px}
+
+.search{
+width:100%;padding:15px 18px;margin:20px 0;
+border:1px solid #ffffff25;border-radius:18px;
+background:#ffffff12;color:#fff;outline:0
+}
+.search::placeholder{color:#b8b9d4}
+
+.title{margin:25px 0 14px;font-size:25px}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px
+}
+
+.card{
+padding:18px;border-radius:24px;
+min-height:155px;box-shadow:0 12px 30px #0005;
+border:1px solid #ffffff20;
+transition:.25s;cursor:pointer;overflow:hidden
+}
+.card:hover{transform:translateY(-5px)}
+.icon{font-size:48px;margin-bottom:9px}
+.card h3{font-size:18px}
+.card p{font-size:13px;opacity:.85;margin-top:7px}
+
+.c1{background:linear-gradient(135deg,#ff5b35,#ff337f)}
+.c2{background:linear-gradient(135deg,#00a8ff,#3858ff)}
+.c3{background:linear-gradient(135deg,#00b894,#00cec9)}
+.c4{background:linear-gradient(135deg,#ffb347,#e85d04)}
+.c5{background:linear-gradient(135deg,#a55eea,#5f45d9)}
+.c6{background:linear-gradient(135deg,#ff416c,#8e244d)}
+.c7{background:linear-gradient(135deg,#00cec9,#0984e3)}
+.c8{background:linear-gradient(135deg,#f7971e,#ffd200)}
+.c9{background:linear-gradient(135deg,#11998e,#38ef7d)}
+.c10{background:linear-gradient(135deg,#4568dc,#b06ab3)}
+
+.bar{
+height:7px;background:#ffffff35;border-radius:10px;
+margin-top:12px;overflow:hidden
+}
+.bar i{display:block;height:100%;background:#fff;width:0}
+
+/* AI */
+.ai{
+margin-top:30px;background:#ffffff10;
+padding:20px;border-radius:25px;
+border:1px solid #ffffff18
+}
+.chat{
+height:260px;overflow:auto;background:#0004;
+padding:14px;border-radius:18px;margin:12px 0
+}
+.msg{
+padding:11px 14px;border-radius:15px;
+margin:8px 0;white-space:pre-line;max-width:90%
+}
+.user{background:#6647e9;margin-left:auto}
+.bot{background:#ffffff16}
+.chatrow{display:flex;gap:8px}
+.chatrow input{
+flex:1;padding:14px;border-radius:15px;border:0;outline:0
+}
+.chatrow button{
+padding:12px 18px;border-radius:15px;
+background:#ffc52e
+}
+
+/* reader */
+.reader{
+display:none;position:fixed;inset:0;z-index:3000;
+background:#050815ee;backdrop-filter:blur(9px);
+padding:12px;overflow:auto
+}
+.readerTop{
+width:min(1000px,100%);margin:auto;
+display:flex;justify-content:space-between;
+align-items:center;margin-bottom:12px
+}
+.close{
+background:#ff4757;color:#fff;
+padding:10px 16px;border-radius:14px
+}
+
+.book{
+width:min(900px,100%);margin:auto;
+background:#4c2813;padding:14px;
+border-radius:12px;
+box-shadow:0 30px 80px #000b
+}
+.page{
+min-height:550px;
+position:relative;
+background:
+linear-gradient(90deg,#d6bd86,#fff9df 8%,#fffdf1 92%,#d4b879);
+color:#382819;padding:32px;
+border-radius:5px 18px 18px 5px;
+box-shadow:inset 8px 0 18px #0002;
+transform-origin:left center;
+transition:.65s
+}
+.page.flip{transform:rotateY(-150deg)}
+
+.page h2{
+text-align:center;color:#b84c18;
+font-size:29px;margin-bottom:16px
+}
+.picture{
+height:180px;border-radius:20px;
+display:flex;align-items:center;justify-content:center;
+font-size:100px;
+background:linear-gradient(135deg,#b9edff,#e8ffd0);
+margin-bottom:20px;
+box-shadow:inset 0 0 30px #0002
+}
+.pageText{
+font-size:18px;line-height:1.85;
+white-space:pre-line
+}
+.num{
+position:absolute;bottom:10px;left:50%;
+transform:translateX(-50%);font-weight:bold
+}
+.controls{
+display:flex;justify-content:center;
+gap:9px;flex-wrap:wrap;
+margin:17px auto;width:min(900px,100%)
+}
+.controls button{
+padding:12px 17px;border-radius:15px;
+background:#7046ff;color:#fff
+}
+.controls button:nth-child(3){background:#ffb51b;color:#222}
+
+/* chapter panel */
+.chapterPanel{
+display:none;position:fixed;inset:0;
+z-index:3500;background:#071022f2;
+padding:15px;overflow:auto
+}
+.chapterBox{
+width:min(1100px,100%);margin:auto
+}
+.chapterGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
+gap:8px;margin:20px 0
+}
+.chapterBtn{
+padding:11px 5px;border-radius:12px;
+background:#ffffff12;color:white;
+border:1px solid #ffffff18
+}
+.chapterBtn.done{background:#18a558}
+.chapterBtn.active{background:#ffb522;color:#222}
+
+.lesson{
+background:#fff;color:#222;
+border-radius:25px;padding:25px;
+margin-top:15px
+}
+.lesson h2{color:#653cff;margin-bottom:12px}
+.lessonText{line-height:1.8;white-space:pre-line}
+.lessonActions{
+display:flex;gap:10px;flex-wrap:wrap;margin-top:18px
+}
+.lessonActions button{
+padding:11px 16px;border-radius:13px;
+background:#6745ef;color:#fff
+}
+
+.quiz{
+margin-top:18px;background:#eef0ff;
+padding:18px;border-radius:18px
+}
+.option{
+display:block;width:100%;
+text-align:left;padding:12px;
+margin-top:8px;border-radius:12px;
+background:#fff;color:#222
+}
+.option.good{background:#28b463;color:#fff}
+.option.bad{background:#e74c3c;color:#fff}
+
+@media(max-width:600px){
+.logo{font-size:21px}
+.stars{font-size:13px}
+.grid{grid-template-columns:repeat(2,1fr)}
+.card{min-height:135px;padding:14px}
+.icon{font-size:38px}
+.page{min-height:500px;padding:23px 18px}
+.page h2{font-size:24px}
+.picture{height:135px;font-size:75px}
+.pageText{font-size:16px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">Edu<b>Star</b> Kids 🚀</div>
+<div class="stars">⭐ <span id="stars">0</span></div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<h1>📚 EduStar Kids</h1>
+<p>Class 1–5 • Books • AI Teacher • Culture • Learning</p>
+</section>
+
+<input id="search" class="search"
+placeholder="🔍 कोई subject या learning section खोजें..."
+oninput="searchCards()">
+
+<h2 class="title">🎒 Class 1–5</h2>
+<div id="classes" class="grid"></div>
+
+<h2 class="title">📚 Learning Library</h2>
+<div id="library" class="grid"></div>
+
+<h2 class="title">🇮🇳 धर्म और संस्कृति Learning</h2>
+<div id="religions" class="grid"></div>
+
+<section class="ai">
+<h2>🤖 AI Teacher</h2>
+<p style="margin-top:6px;color:#cdd2ff">
+Class 1–5 के बच्चों के लिए आसान भाषा में जवाब।
+</p>
+
+<div id="chat" class="chat">
+<div class="msg bot">
+👋 नमस्ते! अपना सवाल पूछो।
+</div>
+</div>
+
+<div class="chatrow">
+<input id="question" placeholder="जैसे: पौधे खाना कैसे बनाते हैं?">
+<button onclick="askAI()">पूछो</button>
+</div>
+</section>
+
+</main>
+
+
+<!-- BOOK -->
+<div id="reader" class="reader">
+
+<div class="readerTop">
+<div id="readerTitle">📖 Book</div>
+<button class="close" onclick="closeReader()">✕</button>
+</div>
+
+<div class="book">
+<div id="page" class="page">
+
+<h2 id="pageTitle"></h2>
+
+<div id="picture" class="picture"></div>
+
+<div id="pageText" class="pageText"></div>
+
+<div id="pageNum" class="num"></div>
+
+</div>
+</div>
+
+<div class="controls">
+<button onclick="previousPage()">⬅️ Previous</button>
+<button onclick="speakPage()">🔊 पढ़कर सुनाओ</button>
+<button onclick="addStar()">⭐ Star</button>
+<button onclick="nextPage()">Next ➡️</button>
+</div>
+
+</div>
+
+
+<!-- CHAPTERS -->
+<div id="chapters" class="chapterPanel">
+
+<div class="chapterBox">
+
+<div class="readerTop">
+<h2 id="chapterTitle">📚 Chapters</h2>
+<button class="close" onclick="closeChapters()">✕</button>
+</div>
+
+<div id="chapterGrid" class="chapterGrid"></div>
+
+<div id="lesson" class="lesson"></div>
+
+</div>
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+ FIREBASE + GEMINI
+========================================================= */
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+getAI,
+getGenerativeModel,
+GoogleAIBackend
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-ai.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyCeja6x6LR-gR0ZSoWGM4PJRH0rvBBP-X0",
+authDomain:"edustard-kids.firebaseapp.com",
+projectId:"edustard-kids",
+storageBucket:"edustard-kids.firebasestorage.app",
+messagingSenderId:"317346640779",
+appId:"1:317346640779:web:7ee587fce87911d3fa358e",
+measurementId:"G-5X29C7J0VT"
+};
+
+let app;
+let model=null;
+
+try{
+
+app=initializeApp(firebaseConfig);
+
+const ai=getAI(app,{
+backend:new GoogleAIBackend()
+});
+
+model=getGenerativeModel(ai,{
+model:"gemini-3.6-flash",
+systemInstruction:`
+You are EduStar Kids AI Teacher.
+Teach children from Class 1 to Class 5.
+Use very simple Hindi.
+Be friendly and encouraging.
+Explain step by step.
+For Maths show calculations.
+For Science give simple examples.
+For religion questions be respectful and educational.
+Never invent scripture quotations.
+`
+});
+
+}catch(e){
+console.log("AI initialization:",e);
+}
+
+
+/* =========================================================
+ CLASSES
+========================================================= */
+
+const classes=[
+["Class 1","1️⃣","c1"],
+["Class 2","2️⃣","c2"],
+["Class 3","3️⃣","c3"],
+["Class 4","4️⃣","c4"],
+["Class 5","5️⃣","c5"]
+];
+
+
+/* =========================================================
+ LIBRARY
+========================================================= */
+
+const library=[
+
+["English","🔤","c2"],
+["Hindi","🪷","c4"],
+["Maths","🔢","c3"],
+["Science","🔬","c7"],
+["EVS","🌱","c9"],
+["Drawing","🎨","c8"],
+["Stories","📖","c6"],
+["Animals & Jungle","🦁","c3"],
+["Space","🚀","c2"],
+["General Knowledge","🌍","c5"]
+
+];
+
+
+/* =========================================================
+ RELIGIONS / CULTURES
+ 200 CHAPTERS EACH
+========================================================= */
+
+const religionData=[
+
+{
+name:"Islamic Learning",
+icon:"☪️",
+color:"c4",
+topics:[
+"Qur'an basics",
+"Islamic beliefs",
+"Five pillars",
+"Namaz",
+"Wudu",
+"Ramadan",
+"Eid",
+"Duas",
+"Good manners",
+"Family",
+"Honesty",
+"Charity",
+"History",
+"Islamic culture"
+]
+},
+
+{
+name:"Hindu Traditions",
+icon:"🕉️",
+color:"c8",
+topics:[
+"Basic introduction",
+"Indian traditions",
+"Festivals",
+"Stories",
+"Yoga",
+"Values",
+"Family",
+"Nature",
+"Culture",
+"History"
+]
+},
+
+{
+name:"Christianity",
+icon:"✝️",
+color:"c2",
+topics:[
+"Basic introduction",
+"Bible",
+"Jesus",
+"Church",
+"Christmas",
+"Easter",
+"Prayer",
+"Kindness",
+"Family",
+"Service"
+]
+},
+
+{
+name:"Buddhism",
+icon:"☸️",
+color:"c3",
+topics:[
+"Buddha",
+"Four Noble Truths",
+"Eightfold Path",
+"Compassion",
+"Meditation",
+"Mindfulness",
+"Peace",
+"History",
+"Culture",
+"Festivals"
+]
+},
+
+{
+name:"Jainism",
+icon:"🪷",
+color:"c5",
+topics:[
+"Basic introduction",
+"Mahavira",
+"Ahimsa",
+"Truth",
+"Self-control",
+"Compassion",
+"History",
+"Festivals",
+"Culture",
+"Values"
+]
+},
+
+{
+name:"Sikhism",
+icon:"🪯",
+color:"c7",
+topics:[
+"Guru Nanak",
+"Gurus",
+"Guru Granth Sahib",
+"Seva",
+"Equality",
+"Honesty",
+"Langar",
+"Gurdwara",
+"Festivals",
+"History"
+]
+},
+
+{
+name:"Judaism",
+icon:"✡️",
+color:"c6",
+topics:[
+"Basic introduction",
+"Torah",
+"Traditions",
+"Festivals",
+"Family",
+"History",
+"Culture",
+"Prayer",
+"Community",
+"Values"
+]
+},
+
+{
+name:"Parsi / Zoroastrian Heritage",
+icon:"🔥",
+color:"c4",
+topics:[
+"Zoroaster",
+"Good thoughts",
+"Good words",
+"Good deeds",
+"Fire tradition",
+"Parsi history",
+"India",
+"Community",
+"Festivals",
+"Culture"
+]
+},
+
+{
+name:"Indian Tribal & Folk Traditions",
+icon:"🌳",
+color:"c9",
+topics:[
+"Communities",
+"Nature",
+"Folk art",
+"Music",
+"Dance",
+"Stories",
+"Festivals",
+"Crafts",
+"Languages",
+"Heritage"
+]
+},
+
+{
+name:"Indian Culture & Festivals",
+icon:"🇮🇳",
+color:"c1",
+topics:[
+"India",
+"Languages",
+"Food",
+"Clothes",
+"Music",
+"Dance",
+"Festivals",
+"Arts",
+"Heritage",
+"Unity in diversity"
+]
+}
+
+];
+
+
+/* =========================================================
+ 200 CHAPTER GENERATOR
+========================================================= */
+
+function make200Chapters(religion){
+
+let arr=[];
+
+for(let i=1;i<=200;i++){
+
+let topic=
+religion.topics[(i-1)%religion.topics.length];
+
+arr.push({
+
+id:i,
+
+title:`Chapter ${i}: ${topic}`,
+
+icon:religion.icon,
+
+text:
+`यह ${religion.name} का Chapter ${i} है।
+
+आज का विषय:
+${topic}
+
+इस chapter में बच्चों के लिए इस विषय का आसान educational परिचय दिया जाएगा।
+
+सीखने की बातें:
+• विषय को सरल भाषा में समझना
+• इतिहास और संस्कृति को जानना
+• अच्छे मूल्यों को समझना
+• अलग-अलग परंपराओं का सम्मान करना
+
+महत्वपूर्ण:
+किसी धार्मिक ग्रंथ की मूल आयत, श्लोक या उद्धरण यहाँ बिना सत्यापन के नहीं बनाया गया है।
+
+अगले chapter में आगे सीखें।`
+
+});
+
+}
+
+return arr;
+
+}
+
+
+/* =========================================================
+ RENDER CLASS CARDS
+========================================================= */
+
+function renderClasses(){
+
+let box=document.getElementById("classes");
+
+classes.forEach((c,i)=>{
+
+let d=document.createElement("div");
+
+d.className=`card ${c[2]}`;
+
+d.innerHTML=`
+<div class="icon">${c[1]}</div>
+<h3>${c[0]}</h3>
+<p>📚 Books • 📝 Quiz • ⭐ Progress</p>
+<div class="bar">
+<i style="width:${10+i*12}%"></i>
+</div>
+`;
+
+d.onclick=()=>{
+
+openBook({
+title:`${c[0]} Learning`,
+pages:[
+["Hindi","🪷","अ से अनार। आ से आम।"],
+["English","🔤","A for Apple. B for Ball."],
+["Maths","🔢","2 + 3 = 5"],
+["Science","🌱","Plants need water and sunlight."],
+["Stories","📖","अच्छी आदतें हमें बेहतर इंसान बनाती हैं।"]
+]
+});
+
+};
+
+box.appendChild(d);
+
+});
+
+}
+
+
+/* =========================================================
+ LIBRARY CARDS
+========================================================= */
+
+function renderLibrary(){
+
+let box=document.getElementById("library");
+
+library.forEach(item=>{
+
+let d=document.createElement("div");
+
+d.className=`card ${item[2]}`;
+
+d.innerHTML=`
+<div class="icon">${item[1]}</div>
+<h3>${item[0]}</h3>
+<p>Interactive colourful book</p>
+`;
+
+d.onclick=()=>{
+
+let pages=[];
+
+for(let i=1;i<=10;i++){
+
+pages.push([
+`${item[0]} • Chapter ${i}`,
+item[1],
+`${item[0]} का आसान lesson ${i}।
+
+बच्चे इस chapter को पढ़ें, समझें और फिर अगले chapter पर जाएँ।`
+]);
+
+}
+
+openBook({
+title:item[0],
+pages:pages
+});
+
+};
+
+box.appendChild(d);
+
+});
+
+}
+
+
+/* =========================================================
+ RELIGION CARDS
+========================================================= */
+
+function renderReligions(){
+
+let box=document.getElementById("religions");
+
+religionData.forEach(religion=>{
+
+let d=document.createElement("div");
+
+d.className=`card ${religion.color}`;
+
+d.innerHTML=`
+<div class="icon">${religion.icon}</div>
+<h3>${religion.name}</h3>
+<p>📚 200 Chapters</p>
+<div class="bar">
+<i style="width:0"></i>
+</div>
+`;
+
+d.onclick=()=>openChapters(religion);
+
+box.appendChild(d);
+
+});
+
+}
+
+
+/* =========================================================
+ CHAPTER ENGINE
+========================================================= */
+
+let activeReligion=null;
+let activeChapter=1;
+
+function openChapters(religion){
+
+activeReligion=religion;
+activeChapter=1;
+
+document.getElementById("chapters").style.display="block";
+document.body.style.overflow="hidden";
+
+document.getElementById("chapterTitle").textContent=
+`${religion.icon} ${religion.name} • 200 Chapters`;
+
+renderChapterButtons();
+showChapter();
+
+}
+
+window.closeChapters=function(){
+
+document.getElementById("chapters").style.display="none";
+document.body.style.overflow="auto";
+
+};
+
+
+function renderChapterButtons(){
+
+let grid=document.getElementById("chapterGrid");
+
+grid.innerHTML="";
+
+let done=
+JSON.parse(
+localStorage.getItem(
+"done_"+activeReligion.name
+)||"[]"
+);
+
+for(let i=1;i<=200;i++){
+
+let b=document.createElement("button");
+
+b.className="chapterBtn";
+
+if(done.includes(i))b.classList.add("done");
+
+if(i===activeChapter)b.classList.add("active");
+
+b.textContent=i;
+
+b.onclick=()=>{
+
+activeChapter=i;
+
+renderChapterButtons();
+showChapter();
+
+};
+
+grid.appendChild(b);
+
+}
+
+}
+
+
+function showChapter(){
+
+let chapters=make200Chapters(activeReligion);
+
+let ch=chapters[activeChapter-1];
+
+let lesson=document.getElementById("lesson");
+
+lesson.innerHTML=`
+
+<h2>${ch.icon} ${ch.title}</h2>
+
+<div class="lessonText">${ch.text}</div>
+
+<div class="lessonActions">
+
+<button onclick="speakLesson()">
+🔊 पढ़कर सुनाओ
+</button>
+
+<button onclick="completeChapter()">
+⭐ Chapter Complete
+</button>
+
+<button onclick="chapterQuiz()">
+📝 Quiz
+</button>
+
+</div>
+
+<div id="chapterQuizBox"></div>
+
+`;
+
+}
+
+
+window.completeChapter=function(){
+
+let key="done_"+activeReligion.name;
+
+let done=
+JSON.parse(localStorage.getItem(key)||"[]");
+
+if(!done.includes(activeChapter)){
+
+done.push(activeChapter);
+
+localStorage.setItem(key,JSON.stringify(done));
+
+addStar();
+
+}
+
+if(activeChapter<200){
+
+activeChapter++;
+
+renderChapterButtons();
+showChapter();
+
+}
+
+};
+
+
+window.chapterQuiz=function(){
+
+let box=document.getElementById("chapterQuizBox");
+
+box.innerHTML=`
+
+<div class="quiz">
+
+<b>📝 Quick Question</b>
+
+<p style="margin-top:10px">
+आज के chapter में आपने क्या सीखा?
+</p>
+
+<button class="option"
+onclick="quizCorrect(this)">
+A. नया विषय
+</button>
+
+<button class="option"
+onclick="quizCorrect(this)">
+B. कुछ भी नहीं
+</button>
+
+<button class="option"
+onclick="quizCorrect(this)">
+C. मैंने ध्यान से नहीं पढ़ा
+</button>
+
+<div id="quizResult"></div>
+
+</div>
+
+`;
+
+};
+
+
+window.quizCorrect=function(btn){
+
+btn.classList.add("good");
+
+document.getElementById("quizResult").innerHTML=
+"<br>🎉 बहुत बढ़िया! +1 Star";
+
+addStar();
+
+};
+
+
+/* =========================================================
+ BOOK
+========================================================= */
+
+let currentBook=null;
+let pageIndex=0;
+
+window.openBook=function(book){
+
+currentBook=book;
+pageIndex=0;
+
+document.getElementById("reader").style.display="block";
+document.body.style.overflow="hidden";
+
+document.getElementById("readerTitle").textContent=
+book.title;
+
+renderBookPage();
+
+};
+
+window.closeReader=function(){
+
+document.getElementById("reader").style.display="none";
+document.body.style.overflow="auto";
+
+};
+
+
+function renderBookPage(){
+
+let data=currentBook.pages[pageIndex];
+
+document.getElementById("pageTitle").textContent=data[0];
+document.getElementById("picture").textContent=data[1];
+document.getElementById("pageText").textContent=data[2];
+
+document.getElementById("pageNum").textContent=
+`Page ${pageIndex+1} / ${currentBook.pages.length}`;
+
+document.getElementById("page").classList.remove("flip");
+
+}
+
+
+window.nextPage=function(){
+
+if(pageIndex>=currentBook.pages.length-1)return;
+
+document.getElementById("page").classList.add("flip");
+
+setTimeout(()=>{
+
+pageIndex++;
+renderBookPage();
+
+},350);
+
+};
+
+
+window.previousPage=function(){
+
+if(pageIndex<=0)return;
+
+pageIndex--;
+
+renderBookPage();
+
+};
+
+
+window.speakPage=function(){
+
+let data=currentBook.pages[pageIndex];
+
+speechSynthesis.cancel();
+
+let u=new SpeechSynthesisUtterance(
+data[0]+". "+data[2]
+);
+
+u.lang="hi-IN";
+u.rate=.85;
+
+speechSynthesis.speak(u);
+
+};
+
+
+window.speakLesson=function(){
+
+let chapters=make200Chapters(activeReligion);
+let ch=chapters[activeChapter-1];
+
+speechSynthesis.cancel();
+
+let u=new SpeechSynthesisUtterance(
+ch.title+". "+ch.text
+);
+
+u.lang="hi-IN";
+u.rate=.85;
+
+speechSynthesis.speak(u);
+
+};
+
+
+/* =========================================================
+ STARS
+========================================================= */
+
+let stars=
+Number(localStorage.getItem("edustarStars")||0);
+
+function updateStars(){
+
+document.getElementById("stars").textContent=stars;
+
+localStorage.setItem("edustarStars",stars);
+
+}
+
+window.addStar=function(){
+
+stars++;
+updateStars();
+
+};
+
+
+/* =========================================================
+ AI
+========================================================= */
+
+window.askAI=async function(){
+
+let input=document.getElementById("question");
+let chat=document.getElementById("chat");
+
+let q=input.value.trim();
+
+if(!q)return;
+
+chat.innerHTML+=`
+<div class="msg user">${safe(q)}</div>
+`;
+
+input.value="";
+
+let thinking=document.createElement("div");
+
+thinking.className="msg bot";
+thinking.textContent="🤖 AI Teacher सोच रहा है...";
+
+chat.appendChild(thinking);
+
+chat.scrollTop=chat.scrollHeight;
+
+if(!model){
+
+thinking.textContent=
+"AI अभी available नहीं है। Firebase AI Logic setup check करें।";
+
+return;
+
+}
+
+try{
+
+let prompt=`
+You are a friendly Class 1-5 teacher.
+
+Student question:
+${q}
+
+Answer in simple Hindi.
+Explain step by step.
+Use examples.
+Do not invent religious scripture.
+Keep the answer child-friendly.
+`;
+
+let result=await model.generateContent(prompt);
+
+thinking.textContent=
+"🤖 AI Teacher:\n\n"+
+result.response.text();
+
+addStar();
+
+}catch(e){
+
+console.error(e);
+
+thinking.textContent=
+"❌ AI response नहीं मिला। Firebase AI Logic configuration check करें।";
+
+}
+
+};
+
+
+function safe(x){
+
+return x
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+ SEARCH
+========================================================= */
+
+window.searchCards=function(){
+
+let q=
+document.getElementById("search")
+.value.toLowerCase();
+
+document
+.querySelectorAll(".card")
+.forEach(card=>{
+
+card.style.display=
+card.innerText.toLowerCase().includes(q)
+?"":"none";
+
+});
+
+};
+
+
+/* =========================================================
+ SWIPE BOOK
+========================================================= */
+
+let sx=0;
+
+document.getElementById("reader")
+.addEventListener("touchstart",e=>{
+sx=e.changedTouches[0].screenX;
+});
+
+document.getElementById("reader")
+.addEventListener("touchend",e=>{
+
+let ex=e.changedTouches[0].screenX;
+
+if(ex-sx<-50)nextPage();
+
+if(ex-sx>50)previousPage();
+
+});
+
+
+/* =========================================================
+ START
+========================================================= */
+
+renderClasses();
+renderLibrary();
+renderReligions();
+updateStars();
+
+</script>
+
+</body>
+</html>
