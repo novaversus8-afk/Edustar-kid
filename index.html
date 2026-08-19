@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduStar Kids - Class 1 to 5</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  background:#f4f7ff;
+  color:#172033;
+}
+header{
+  background:linear-gradient(135deg,#5b5cf0,#7c3aed);
+  color:white;
+  padding:18px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 4px 15px #0002;
+}
+.nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+.logo{
+  font-size:25px;
+  font-weight:900;
+}
+.logo span{color:#ffd43b}
+.stars{
+  background:#ffffff22;
+  padding:9px 15px;
+  border-radius:25px;
+  font-weight:bold;
+}
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:25px 16px 70px;
+}
+.hero{
+  background:white;
+  border-radius:25px;
+  padding:28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  box-shadow:0 8px 30px #243b8a12;
+  margin-bottom:25px;
+}
+.hero h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
+.hero p{color:#68728a;font-size:16px}
+.hero-icon{
+  font-size:75px;
+}
+.section-title{
+  margin:25px 0 15px;
+  font-size:24px;
+}
+.classes{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+.class-card{
+  border:0;
+  padding:22px 10px;
+  background:white;
+  border-radius:20px;
+  cursor:pointer;
+  box-shadow:0 5px 20px #243b8a12;
+  transition:.2s;
+}
+.class-card:hover,.class-card.active{
+  transform:translateY(-4px);
+  background:#eef0ff;
+}
+.class-number{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:#625bf2;
+  color:white;
+  display:grid;
+  place-items:center;
+  margin:auto auto 10px;
+  font-size:22px;
+  font-weight:bold;
+}
+.subjects{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px;
+}
+.subject{
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  cursor:pointer;
+  border:2px solid transparent;
+  box-shadow:0 5px 20px #243b8a10;
+}
+.subject:hover{border-color:#625bf2}
+.subject .emoji{font-size:38px}
+.subject h3{margin:9px 0 5px}
+.subject small{color:#788198}
+.lessons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+.lesson{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 5px 20px #243b8a10;
+}
+.lesson h3{margin-bottom:9px}
+.lesson p{
+  color:#68728a;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+.btn{
+  border:0;
+  background:#625bf2;
+  color:white;
+  padding:11px 17px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.btn.green{background:#16a66a}
+.btn.orange{background:#f59e0b}
+.btn.dark{background:#172033}
+.ai{
+  margin-top:30px;
+  background:linear-gradient(135deg,#151c35,#252d55);
+  color:white;
+  border-radius:25px;
+  padding:25px;
+}
+.ai h2{margin-bottom:8px}
+.ai p{color:#cbd2ea;margin-bottom:18px}
+.ai-box{
+  display:flex;
+  gap:10px;
+}
+.ai-box input{
+  flex:1;
+  padding:14px;
+  border-radius:12px;
+  border:0;
+  outline:0;
+}
+.ai-answer{
+  background:#ffffff12;
+  padding:18px;
+  border-radius:15px;
+  margin-top:15px;
+  line-height:1.6;
+  display:none;
+}
+.quiz{
+  margin-top:30px;
+  background:white;
+  padding:25px;
+  border-radius:22px;
+  box-shadow:0 5px 20px #243b8a10;
+}
+.question{
+  font-size:20px;
+  font-weight:bold;
+  margin:15px 0;
+}
+.options{
+  display:grid;
+  gap:10px;
+}
+.option{
+  padding:14px;
+  border:2px solid #e5e8f0;
+  border-radius:12px;
+  cursor:pointer;
+  background:white;
+}
+.option:hover{border-color:#625bf2}
+.result{
+  margin-top:15px;
+  font-weight:bold;
+}
+.profile{
+  display:flex;
+  gap:15px;
+  align-items:center;
+  background:white;
+  padding:18px;
+  border-radius:20px;
+  margin-top:25px;
+}
+.avatar{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#e8eaff;
+  display:grid;
+  place-items:center;
+  font-size:30px;
+}
+input[type=file]{display:none}
+label.upload{
+  cursor:pointer;
+  color:#625bf2;
+  font-weight:bold;
+}
+.progress{
+  height:12px;
+  background:#e8eaf1;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:10px;
+}
+.progress span{
+  display:block;
+  width:35%;
+  height:100%;
+  background:#625bf2;
+}
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  place-items:center;
+  z-index:50;
+  padding:20px;
+}
+.modal-content{
+  background:white;
+  max-width:650px;
+  width:100%;
+  max-height:85vh;
+  overflow:auto;
+  border-radius:25px;
+  padding:28px;
+}
+.close{
+  float:right;
+  border:0;
+  background:#eee;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  cursor:pointer;
+}
+.lesson-text{
+  line-height:1.8;
+  margin-top:20px;
+  color:#394158;
+}
+footer{
+  text-align:center;
+  padding:25px;
+  color:#7b8499;
+}
+@media(max-width:800px){
+  .classes{grid-template-columns:repeat(3,1fr)}
+  .subjects{grid-template-columns:repeat(2,1fr)}
+  .lessons{grid-template-columns:1fr}
+  .hero h1{font-size:25px}
+}
+@media(max-width:500px){
+  .classes{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:20px}
+  .hero-icon{font-size:50px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">Edu<span>Star</span> Kids 🚀</div>
+    <div class="stars">⭐ <span id="stars">0</span> Stars</div>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div>
+    <h1>सीखो, खेलो और आगे बढ़ो! 🎓</h1>
+    <p>Class 1 से Class 5 तक पढ़ाई अब आसान और मजेदार।</p>
+  </div>
+  <div class="hero-icon">🧒📚</div>
+</section>
+
+<h2 class="section-title">अपनी Class चुनो</h2>
+
+<div class="classes">
+  <button class="class-card active" onclick="selectClass(1,this)">
+    <div class="class-number">1</div>
+    Class 1
+  </button>
+  <button class="class-card" onclick="selectClass(2,this)">
+    <div class="class-number">2</div>
+    Class 2
+  </button>
+  <button class="class-card" onclick="selectClass(3,this)">
+    <div class="class-number">3</div>
+    Class 3
+  </button>
+  <button class="class-card" onclick="selectClass(4,this)">
+    <div class="class-number">4</div>
+    Class 4
+  </button>
+  <button class="class-card" onclick="selectClass(5,this)">
+    <div class="class-number">5</div>
+    Class 5
+  </button>
+</div>
+
+<h2 class="section-title">
+  Class <span id="selectedClass">1</span> के Subjects
+</h2>
+
+<div class="subjects">
+
+  <div class="subject" onclick="showSubject('Maths')">
+    <div class="emoji">➗</div>
+    <h3>Maths</h3>
+    <small>Numbers • Addition • Geometry</small>
+  </div>
+
+  <div class="subject" onclick="showSubject('English')">
+    <div class="emoji">🔤</div>
+    <h3>English</h3>
+    <small>Words • Grammar • Reading</small>
+  </div>
+
+  <div class="subject" onclick="showSubject('Hindi')">
+    <div class="emoji">📝</div>
+    <h3>Hindi</h3>
+    <small>पढ़ना • लिखना • व्याकरण</small>
+  </div>
+
+  <div class="subject" onclick="showSubject('Science')">
+    <div class="emoji">🔬</div>
+    <h3>Science</h3>
+    <small>Plants • Animals • Space</small>
+  </div>
+
+  <div class="subject" onclick="showSubject('GK')">
+    <div class="emoji">🌍</div>
+    <h3>GK</h3>
+    <small>India • World • Facts</small>
+  </div>
+
+</div>
+
+<h2 class="section-title" id="lessonTitle">
+  📚 Class 1 Lessons
+</h2>
+
+<div class="lessons" id="lessons"></div>
+
+<section class="ai">
+  <h2>🤖 AI Teacher</h2>
+  <p>कोई भी आसान सवाल पूछो। AI Teacher तुम्हें समझाकर जवाब देगा।</p>
+
+  <div class="ai-box">
+    <input id="aiInput" placeholder="जैसे: 5 + 7 कितना होता है?">
+    <button class="btn" onclick="askAI()">पूछो</button>
+    <button class="btn orange" onclick="voiceQuestion()">🎤</button>
+  </div>
+
+  <div class="ai-answer" id="aiAnswer"></div>
+</section>
+
+<section class="profile">
+  <div class="avatar" id="avatar">🧒</div>
+  <div>
+    <b>Student Profile</b>
+    <p>अपनी फोटो लगाओ</p>
+    <label class="upload">
+      📷 Photo Upload
+      <input type="file" accept="image/*" onchange="uploadPhoto(event)">
+    </label>
+  </div>
+</section>
+
+<section class="quiz">
+  <h2>🎯 आज का Quiz</h2>
+  <div class="question" id="question">
+    5 + 3 कितना होता है?
+  </div>
+
+  <div class="options">
+    <div class="option" onclick="answer(7)">7</div>
+    <div class="option" onclick="answer(8)">8</div>
+    <div class="option" onclick="answer(9)">9</div>
+    <div class="option" onclick="answer(10)">10</div>
+  </div>
+
+  <div class="result" id="quizResult"></div>
+</section>
+
+</main>
+
+<footer>
+  EduStar Kids • Learn Every Day 🚀
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <button class="close" onclick="closeLesson()">✕</button>
+    <h2 id="modalTitle"></h2>
+    <div class="lesson-text" id="modalText"></div>
+
+    <br>
+
+    <button class="btn green" onclick="readLesson()">
+      🔊 मुझे पढ़कर सुनाओ
+    </button>
+  </div>
+</div>
+
+<script>
+
+let currentClass = 1;
+let starCount = Number(localStorage.getItem("stars") || 0);
+
+document.getElementById("stars").innerText = starCount;
+
+const lessonData = {
+
+1:{
+  Maths:[
+    ["गिनती सीखें","1 से 100 तक संख्याओं को पहचानना और गिनना सीखें।"],
+    ["जोड़","2 + 3 जैसे आसान जोड़ सीखें।"],
+    ["आकार","Circle, Square, Triangle जैसे आकार पहचानें।"]
+  ],
+  English:[
+    ["Alphabet","A से Z तक letters पहचानें।"],
+    ["Small Words","Cat, Dog, Sun जैसे छोटे words पढ़ें।"],
+    ["Colors","Red, Blue, Green और दूसरे colors सीखें।"]
+  ],
+  Hindi:[
+    ["स्वर","अ, आ, इ, ई जैसे स्वरों को पहचानें।"],
+    ["व्यंजन","क, ख, ग, घ जैसे व्यंजन सीखें।"],
+    ["शब्द","आसान हिंदी शब्द पढ़ना सीखें।"]
+  ],
+  Science:[
+    ["मेरा शरीर","आंख, कान, नाक और हाथ के बारे में जानें।"],
+    ["पौधे","पौधे हमें क्या देते हैं, जानें।"],
+    ["जानवर","पालतू और जंगली जानवर पहचानें।"]
+  ],
+  GK:[
+    ["भारत","भारत के बारे में आसान बातें सीखें।"],
+    ["रंग","राष्ट्रीय ध्वज के रंग पहचानें।"],
+    ["दुनिया","हमारी पृथ्वी के बारे में जानें।"]
+  ]
+},
+
+2:{},
+3:{},
+4:{},
+5:{}
+
+};
+
+function createDefaultLessons(cls,subject){
+
+  const generic = {
+    Maths:[
+      ["Numbers & Operations","Numbers, addition, subtraction और multiplication को समझें।"],
+      ["Fractions","आधे और चौथाई जैसे fractions को समझें।"],
+      ["Geometry","Lines, angles और shapes को पहचानें।"]
+    ],
+    English:[
+      ["Grammar","Noun, Pronoun, Verb और Adjective सीखें।"],
+      ["Reading","छोटे paragraphs पढ़कर समझें।"],
+      ["Vocabulary","नए English words सीखें।"]
+    ],
+    Hindi:[
+      ["व्याकरण","संज्ञा, सर्वनाम और क्रिया सीखें।"],
+      ["पठन","छोटी कहानियां पढ़कर समझें।"],
+      ["लेखन","सही वाक्य बनाना सीखें।"]
+    ],
+    Science:[
+      ["Living Things","पौधे और जानवरों की basic जानकारी।"],
+      ["Our Environment","हवा, पानी और पर्यावरण समझें।"],
+      ["Earth & Space","पृथ्वी, चंद्रमा और सूर्य के बारे में जानें।"]
+    ],
+    GK:[
+      ["India GK","भारत के राज्य, राजधानी और प्रसिद्ध स्थान।"],
+      ["World GK","दुनिया के देशों और महाद्वीपों की जानकारी।"],
+      ["Amazing Facts","दुनिया के मजेदार facts सीखें।"]
+    ]
+  };
+
+  return generic[subject];
+}
+
+function selectClass(cls,element){
+
+  currentClass=cls;
+
+  document.querySelectorAll(".class-card")
+    .forEach(x=>x.classList.remove("active"));
+
+  element.classList.add("active");
+
+  document.getElementById("selectedClass").innerText=cls;
+
+  renderLessons("Maths");
+}
+
+function showSubject(subject){
+
+  document.getElementById("lessonTitle").innerText =
+    "📚 Class "+currentClass+" • "+subject;
+
+  renderLessons(subject);
+}
+
+function renderLessons(subject){
+
+  let data =
+    lessonData[currentClass] &&
+    lessonData[currentClass][subject];
+
+  if(!data || data.length===0){
+    data=createDefaultLessons(currentClass,subject);
+  }
+
+  const box=document.getElementById("lessons");
+
+  box.innerHTML="";
+
+  data.forEach((lesson,index)=>{
+
+    box.innerHTML += `
+      <div class="lesson">
+        <h3>${lesson[0]}</h3>
+        <p>${lesson[1]}</p>
+        <button class="btn"
+          onclick="openLesson('${escapeText(lesson[0])}','${escapeText(lesson[1])}')">
+          📖 Start Lesson
+        </button>
+      </div>
+    `;
+  });
+}
+
+function escapeText(text){
+  return text.replace(/'/g,"&#39;");
+}
+
+function openLesson(title,text){
+
+  document.getElementById("modalTitle").innerText=title;
+  document.getElementById("modalText").innerText=
+    text+
+    "\n\n🌟 याद रखो: रोज थोड़ा-थोड़ा पढ़ना सबसे अच्छा तरीका है।";
+
+  document.getElementById("modal").style.display="grid";
+
+  addStars(2);
+}
+
+function closeLesson(){
+  document.getElementById("modal").style.display="none";
+  speechSynthesis.cancel();
+}
+
+function readLesson(){
+
+  const text=document.getElementById("modalText").innerText;
+
+  speechSynthesis.cancel();
+
+  const speech=new SpeechSynthesisUtterance(text);
+
+  speech.lang="hi-IN";
+  speech.rate=.85;
+
+  speechSynthesis.speak(speech);
+}
+
+function addStars(num){
+
+  starCount += num;
+
+  localStorage.setItem("stars",starCount);
+
+  document.getElementById("stars").innerText=starCount;
+}
+
+function answer(value){
+
+  const result=document.getElementById("quizResult");
+
+  if(value===8){
+
+    result.innerText="🎉 बिल्कुल सही! +10 Stars";
+
+    addStars(10);
+
+  }else{
+
+    result.innerText="🙂 कोशिश अच्छी थी। फिर से सोचो!";
+  }
+}
+
+function askAI(){
+
+  const input=document.getElementById("aiInput");
+
+  const question=input.value.trim();
+
+  const answerBox=document.getElementById("aiAnswer");
+
+  if(!question){
+
+    answerBox.style.display="block";
+    answerBox.innerText="पहले अपना सवाल लिखो या 🎤 दबाकर बोलो।";
+    return;
+  }
+
+  answerBox.style.display="block";
+
+  let answer="";
+
+  if(question.match(/5\s*\+\s*7/)){
+    answer="5 + 7 = 12 🎉 बहुत आसान! पहले 5 में 7 जोड़ो और आपको 12 मिलेगा।";
+  }
+  else if(question.includes("भारत की राजधानी")){
+    answer="भारत की राजधानी नई दिल्ली है। 🇮🇳";
+  }
+  else if(question.includes("पानी")){
+    answer="पानी हमारे जीवन के लिए बहुत जरूरी है। हम पानी पीते हैं और पौधों को भी पानी चाहिए। 💧";
+  }
+  else if(question.includes("सूर्य")){
+    answer="सूर्य हमारे सौरमंडल का तारा है और पृथ्वी को प्रकाश तथा गर्मी देता है। ☀️";
+  }
+  else{
+    answer=
+      "बहुत अच्छा सवाल! 🤖 अभी मैं इस सवाल का आसान जवाब देने की कोशिश कर रहा हूँ। "+
+      "इसे अपने teacher के साथ भी discuss करो। 📚";
+  }
+
+  answerBox.innerText=answer;
+
+  const speech=new SpeechSynthesisUtterance(answer);
+  speech.lang="hi-IN";
+  speech.rate=.9;
+  speechSynthesis.speak(speech);
+}
+
+function voiceQuestion(){
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+
+    alert(
+      "आपके browser में Voice Recognition उपलब्ध नहीं है। Chrome में कोशिश करें।"
+    );
+
+    return;
+  }
+
+  const recognition=new SpeechRecognition();
+
+  recognition.lang="hi-IN";
+  recognition.continuous=false;
+  recognition.interimResults=false;
+
+  recognition.onstart=function(){
+
+    document.getElementById("aiInput").placeholder=
+      "🎤 सुन रहा हूँ...";
+  };
+
+  recognition.onresult=function(event){
+
+    const text=event.results[0][0].transcript;
+
+    document.getElementById("aiInput").value=text;
+
+    askAI();
+  };
+
+  recognition.onerror=function(){
+
+    document.getElementById("aiInput").placeholder=
+      "फिर से 🎤 दबाकर बोलें";
+  };
+
+  recognition.onend=function(){
+
+    document.getElementById("aiInput").placeholder=
+      "जैसे: 5 + 7 कितना होता है?";
+  };
+
+  recognition.start();
+}
+
+function uploadPhoto(event){
+
+  const file=event.target.files[0];
+
+  if(!file)return;
+
+  const reader=new FileReader();
+
+  reader.onload=function(e){
+
+    document.getElementById("avatar").innerHTML=
+      `<img src="${e.target.result}"
+       style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+
+    localStorage.setItem("studentPhoto",e.target.result);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+const savedPhoto=localStorage.getItem("studentPhoto");
+
+if(savedPhoto){
+
+  document.getElementById("avatar").innerHTML=
+    `<img src="${savedPhoto}"
+     style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+}
+
+renderLessons("Maths");
+
+</script>
+
+</body>
+</html>
