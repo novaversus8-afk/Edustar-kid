@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>बच्चों की दुनिया</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+header{
+  background:#fff;
+  padding:16px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#1769e0;
+}
+
+nav button{
+  border:0;
+  background:transparent;
+  margin-left:12px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.container{
+  width:min(1100px,94%);
+  margin:auto;
+}
+
+.hero{
+  margin-top:25px;
+  padding:45px 30px;
+  border-radius:28px;
+  background:linear-gradient(135deg,#dff1ff,#fff);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.hero h1{
+  font-size:42px;
+  margin:12px 0;
+}
+
+.hero p{
+  color:#667085;
+  line-height:1.7;
+}
+
+.robot{
+  font-size:85px;
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 13px;
+  border-radius:20px;
+  background:#fff;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.section{
+  margin-top:28px;
+}
+
+.section h2{
+  margin-bottom:15px;
+}
+
+.subjects{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.subject{
+  border:0;
+  background:#fff;
+  padding:22px;
+  border-radius:20px;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+  transition:.2s;
+}
+
+.subject:hover{
+  transform:translateY(-3px);
+}
+
+.subject .emoji{
+  font-size:32px;
+}
+
+.subject h3{
+  margin-top:9px;
+}
+
+.subject p{
+  margin-top:5px;
+  color:#667085;
+  font-size:13px;
+}
+
+.teacher{
+  margin-top:28px;
+  padding:25px;
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.controls{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:15px 0;
+}
+
+select,
+textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #d5dae3;
+  border-radius:11px;
+  font-size:15px;
+  background:#fff;
+}
+
+textarea{
+  min-height:130px;
+  resize:vertical;
+}
+
+.ask{
+  margin-top:10px;
+  padding:13px 20px;
+  border:0;
+  border-radius:11px;
+  background:#1769e0;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.ask:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.answer{
+  margin-top:18px;
+  padding:18px;
+  min-height:100px;
+  background:#f5f7fa;
+  border-radius:13px;
+  white-space:pre-wrap;
+  line-height:1.6;
+}
+
+.tools{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.tool{
+  background:#fff;
+  padding:18px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.books{
+  background:#fff;
+  padding:25px;
+  border-radius:22px;
+}
+
+.book{
+  display:block;
+  padding:15px;
+  margin-top:10px;
+  border:1px solid #e0e4ea;
+  border-radius:11px;
+  color:#1454a3;
+  text-decoration:none;
+}
+
+.quiz{
+  background:#fff;
+  padding:25px;
+  border-radius:22px;
+}
+
+.quiz button{
+  display:block;
+  width:100%;
+  margin-top:10px;
+  padding:13px;
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:10px;
+  cursor:pointer;
+  text-align:left;
+}
+
+#quizResult{
+  margin-top:15px;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  padding:35px;
+  color:#667085;
+}
+
+@media(max-width:700px){
+
+  .hero{
+    padding:28px 20px;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .robot{
+    font-size:55px;
+  }
+
+  .subjects{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .tools{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .controls{
+    grid-template-columns:1fr;
+  }
+
+  nav{
+    display:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+📚 <span>बच्चों की दुनिया</span>
+</div>
+
+<nav>
+<button onclick="go('home')">Home</button>
+<button onclick="go('teacher')">AI Teacher</button>
+<button onclick="go('books')">Books</button>
+</nav>
+
+</header>
+
+<main class="container" id="home">
+
+<section class="hero">
+
+<div>
+
+<span class="badge">🤖 Free AI Learning</span>
+
+<h1>पढ़ो, पूछो और सीखो!</h1>
+
+<p>
+बच्चों के लिए एक आसान learning platform।
+<br>
+हिंदी • English • मराठी • Mathematics • Science • GK
+</p>
+
+</div>
+
+<div class="robot">🤖</div>
+
+</section>
+
+
+<section class="section">
+
+<h2>📚 Subjects</h2>
+
+<div class="subjects">
+
+<button class="subject" onclick="selectSubject('Hindi')">
+<div class="emoji">🇮🇳</div>
+<h3>हिंदी</h3>
+<p>भाषा, व्याकरण और लेखन</p>
+</button>
+
+<button class="subject" onclick="selectSubject('English')">
+<div class="emoji">🔤</div>
+<h3>English</h3>
+<p>Grammar, vocabulary और writing</p>
+</button>
+
+<button class="subject" onclick="selectSubject('Marathi')">
+<div class="emoji">🪷</div>
+<h3>मराठी</h3>
+<p>भाषा आणि व्याकरण</p>
+</button>
+
+<button class="subject" onclick="selectSubject('Mathematics')">
+<div class="emoji">➗</div>
+<h3>Mathematics</h3>
+<p>Step-by-step maths practice</p>
+</button>
+
+<button class="subject" onclick="selectSubject('Science')">
+<div class="emoji">🔬</div>
+<h3>Science</h3>
+<p>Physics, Chemistry और Biology</p>
+</button>
+
+<button class="subject" onclick="selectSubject('GK')">
+<div class="emoji">🌍</div>
+<h3>GK</h3>
+<p>General Knowledge</p>
+</button>
+
+</div>
+
+</section>
+
+
+<section class="teacher" id="teacher">
+
+<h2>🤖 AI Teacher</h2>
+
+<div class="controls">
+
+<select id="subject">
+<option>Hindi</option>
+<option>English</option>
+<option>Marathi</option>
+<option>Mathematics</option>
+<option>Science</option>
+<option>GK</option>
+</select>
+
+<select id="grade">
+<option>कक्षा 1–5</option>
+<option>कक्षा 6–8</option>
+<option>कक्षा 9–10</option>
+<option>कक्षा 11–12</option>
+</select>
+
+<select id="language">
+<option>हिंदी</option>
+<option>English</option>
+<option>मराठी</option>
+<option>Hinglish</option>
+</select>
+
+</div>
+
+<textarea
+id="question"
+placeholder="जैसे: प्रकाश संश्लेषण को आसान भाषा में समझाओ..."
+></textarea>
+
+<button
+class="ask"
+id="askButton"
+onclick="askTeacher()">
+✨ AI Teacher से पूछें
+</button>
+
+<div class="answer" id="answer">
+आपका AI Teacher यहाँ जवाब देगा।
+</div>
+
+</section>
+
+
+<section class="section">
+
+<h2>🧰 Study Tools</h2>
+
+<div class="tools">
+
+<div class="tool">📝<br>Quiz Generator</div>
+<div class="tool">🧠<br>Flashcards</div>
+<div class="tool">📖<br>Notes Maker</div>
+<div class="tool">🎯<br>Revision</div>
+<div class="tool">📅<br>Study Plan</div>
+<div class="tool">➗<br>Math Practice</div>
+<div class="tool">✍️<br>Grammar Coach</div>
+<div class="tool">🧪<br>Practice Test</div>
+
+</div>
+
+</section>
+
+
+<section class="quiz section">
+
+<h2>🧠 Quick Quiz</h2>
+
+<p>भारत की राजधानी क्या है?</p>
+
+<button onclick="quiz('correct')">
+A. नई दिल्ली
+</button>
+
+<button onclick="quiz('wrong')">
+B. मुंबई
+</button>
+
+<button onclick="quiz('wrong')">
+C. जयपुर
+</button>
+
+<p id="quizResult"></p>
+
+</section>
+
+
+<section class="books section" id="books">
+
+<h2>📚 Real Educational Books</h2>
+
+<p>
+Official और verified educational resources के links।
+</p>
+
+<a
+class="book"
+href="https://www.ncert.nic.in/textbook.php"
+target="_blank"
+rel="noopener">
+📘 NCERT Textbooks
+</a>
+
+<a
+class="book"
+href="https://epathshala.nic.in/"
+target="_blank"
+rel="noopener">
+📗 ePathshala
+</a>
+
+<a
+class="book"
+href="https://ndl.education.gov.in/"
+target="_blank"
+rel="noopener">
+📚 Rashtriya e-Pustakalaya
+</a>
+
+<a
+class="book"
+href="https://ndl.iitkgp.ac.in/"
+target="_blank"
+rel="noopener">
+🌐 National Digital Library of India
+</a>
+
+</section>
+
+</main>
+
+
+<footer>
+
+📚 बच्चों की दुनिया
+<br>
+सीखना सबके लिए ❤️
+
+</footer>
+
+
+<script>
+
+function selectSubject(subject){
+
+  document.getElementById("subject").value = subject;
+
+  document.getElementById("teacher").scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+function go(id){
+
+  document.getElementById(id).scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+function quiz(result){
+
+  const box = document.getElementById("quizResult");
+
+  if(result === "correct"){
+    box.innerText = "🎉 बिल्कुल सही!";
+  }else{
+    box.innerText = "❌ फिर से कोशिश करो।";
+  }
+
+}
+
+
+async function askTeacher(){
+
+  const question =
+    document.getElementById("question").value.trim();
+
+  const subject =
+    document.getElementById("subject").value;
+
+  const grade =
+    document.getElementById("grade").value;
+
+  const language =
+    document.getElementById("language").value;
+
+  const answer =
+    document.getElementById("answer");
+
+  const button =
+    document.getElementById("askButton");
+
+
+  if(!question){
+
+    answer.innerText =
+      "पहले अपना सवाल लिखो।";
+
+    return;
+  }
+
+
+  answer.innerText =
+    "🤖 AI Teacher जवाब तैयार कर रहा है...";
+
+  button.disabled = true;
+
+
+  try{
+
+    const response = await fetch("/api/ask",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+
+        question:question,
+        subject:subject,
+        grade:grade,
+        language:language
+
+      })
+
+    });
+
+
+    let data;
+
+    try{
+      data = await response.json();
+    }catch{
+      data = {};
+    }
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error || "AI server error"
+      );
+
+    }
+
+
+    answer.innerText =
+      data.answer || "AI ने कोई जवाब नहीं दिया।";
+
+
+  }catch(error){
+
+    console.error(error);
+
+    answer.innerText =
+      "⚠️ AI से connection नहीं हो पाया।\n\n" +
+      "Backend /api/ask और API configuration जाँचें।";
+
+  }finally{
+
+    button.disabled = false;
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
