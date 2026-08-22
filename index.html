@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#5b21b6">
+<title>Samsela • Smart Learning</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Arial,system-ui,sans-serif;background:#f4f6fb;color:#182033}
+button,input{font:inherit}
+button{cursor:pointer}
+
+header{
+ position:sticky;top:0;z-index:100;
+ background:linear-gradient(135deg,#4c1d95,#7c3aed,#9333ea);
+ color:#fff;box-shadow:0 4px 20px #0002
+}
+.nav{
+ max-width:1200px;margin:auto;padding:13px 16px;
+ display:flex;align-items:center;gap:12px
+}
+.logo{font-size:25px;font-weight:900;white-space:nowrap}
+.logo span{color:#facc15}
+.search{flex:1}
+.search input{
+ width:100%;border:0;outline:0;padding:12px 16px;
+ border-radius:14px;background:#ffffff22;color:white
+}
+.search input::placeholder{color:#ffffffbb}
+.navBtn,.filter,.voiceButtons button{
+ border:0;border-radius:13px;padding:11px 14px;font-weight:800
+}
+.navBtn{background:#ffffff20;color:white}
+
+.container{max-width:1200px;margin:auto;padding:18px}
+
+.hero{
+ background:linear-gradient(135deg,#fff,#f1edff);
+ border-radius:25px;padding:25px;
+ box-shadow:0 7px 28px #2d145d12;margin-bottom:18px
+}
+.hero h1{font-size:32px;margin-bottom:8px}
+.hero p{color:#667085;line-height:1.5}
+.heroStats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.stat{
+ background:white;padding:12px 16px;border-radius:15px;
+ box-shadow:0 3px 12px #0001
+}
+.stat b{display:block;font-size:20px;color:#5b21b6}
+
+.filters{
+ display:flex;gap:9px;overflow-x:auto;padding:3px 1px 12px;
+ margin-bottom:10px
+}
+.filter{white-space:nowrap;background:white;color:#344054;box-shadow:0 2px 10px #0001}
+.filter.active{background:#5b21b6;color:white}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+ gap:15px
+}
+.book{
+ background:white;border-radius:20px;padding:18px;
+ box-shadow:0 5px 20px #0000000c;
+ transition:.2s;cursor:pointer
+}
+.book:hover{transform:translateY(-4px);box-shadow:0 10px 25px #0002}
+.bookIcon{
+ width:60px;height:60px;display:grid;place-items:center;
+ border-radius:17px;background:#ede9fe;font-size:34px;margin-bottom:12px
+}
+.bookClass{color:#667085;font-size:12px;font-weight:800}
+.book h3{margin:5px 0}
+.book p{color:#667085;font-size:13px}
+.tag{
+ display:inline-block;margin-top:10px;padding:5px 9px;border-radius:999px;
+ background:#f3e8ff;color:#6b21a8;font-size:11px;font-weight:800
+}
+
+.aiSection{
+ margin-top:22px;border-radius:25px;padding:20px;color:white;
+ background:linear-gradient(145deg,#111827,#312e81);
+ box-shadow:0 10px 30px #0003
+}
+.aiHeader{display:flex;align-items:center;gap:13px}
+.aiAvatar{
+ width:62px;height:62px;display:grid;place-items:center;
+ border-radius:50%;background:white;color:#5b21b6;font-size:34px
+}
+.aiHeader h2{margin-bottom:4px}
+.aiHeader small{opacity:.7}
+
+.status{
+ margin-top:12px;padding:10px 13px;border-radius:12px;
+ background:#ffffff12;font-size:13px
+}
+
+.chat{
+ height:330px;overflow-y:auto;margin:16px 0;padding:10px;
+ border-radius:17px;background:#0003
+}
+.message{
+ max-width:88%;padding:11px 14px;margin:8px 0;
+ border-radius:15px;line-height:1.5;white-space:pre-wrap
+}
+.message.ai{background:#ffffff16}
+.message.user{margin-left:auto;background:#6d28d9}
+
+.aiInput{display:flex;gap:8px}
+.aiInput input{
+ flex:1;border:0;outline:0;border-radius:13px;padding:13px
+}
+.aiButton{
+ border:0;padding:12px 16px;border-radius:13px;
+ background:#facc15;color:#111827;font-weight:900
+}
+.voiceButtons{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.voiceButtons button{background:#ffffff18;color:white}
+
+.modal{
+ position:fixed;inset:0;background:#080b16cc;z-index:500;
+ padding:12px;display:none
+}
+.modal.show{display:block}
+.reader{
+ height:100%;max-width:1100px;margin:auto;background:#f7f8fc;
+ border-radius:22px;overflow:hidden;display:flex;flex-direction:column
+}
+.readerTop{
+ display:flex;align-items:center;gap:10px;padding:13px 16px;
+ background:white;border-bottom:1px solid #eee
+}
+.readerTop h2{flex:1;font-size:19px}
+.close{
+ border:0;background:#fee2e2;color:#991b1b;
+ padding:9px 12px;border-radius:11px;font-weight:900
+}
+.readerBody{
+ flex:1;min-height:0;display:grid;grid-template-columns:250px 1fr
+}
+.chapterList{
+ background:white;border-right:1px solid #eee;padding:12px;overflow:auto
+}
+.chapter{
+ width:100%;text-align:left;border:0;padding:12px;
+ border-radius:12px;margin-bottom:7px;background:#f5f6fa
+}
+.chapter.active{background:#ede9fe;color:#5b21b6;font-weight:900}
+.readerContent{overflow:auto;padding:18px}
+.page{
+ max-width:800px;margin:auto;min-height:300px;background:white;
+ border-radius:19px;padding:20px;box-shadow:0 5px 20px #0001
+}
+.emptyPage{
+ min-height:300px;display:grid;place-items:center;text-align:center;
+ color:#667085;border:2px dashed #d0d5dd;border-radius:16px;padding:25px
+}
+.readerControls{
+ max-width:800px;margin:12px auto 0;display:flex;gap:8px;flex-wrap:wrap
+}
+.readerControls button{
+ border:0;border-radius:12px;padding:11px 14px;font-weight:800
+}
+.primary{background:#5b21b6;color:white}
+.secondary{background:#e5e7eb;color:#111827}
+.progress{
+ max-width:800px;height:8px;margin:12px auto;
+ border-radius:99px;background:#e5e7eb;overflow:hidden
+}
+.progressBar{height:100%;width:0;background:#7c3aed}
+
+.quiz{
+ max-width:800px;margin:18px auto;padding:18px;background:white;
+ border-radius:18px;box-shadow:0 4px 15px #0001
+}
+.option{
+ width:100%;text-align:left;margin-top:8px;padding:11px;
+ background:#f8fafc;border:1px solid #d0d5dd;border-radius:11px
+}
+
+@media(max-width:700px){
+ .nav{flex-wrap:wrap}
+ .logo{font-size:21px}
+ .search{order:3;flex-basis:100%}
+ .hero h1{font-size:25px}
+ .readerBody{grid-template-columns:1fr}
+ .chapterList{max-height:160px;border-right:0;border-bottom:1px solid #eee}
+ .chat{height:280px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+<div class="logo">📚 <span>Samsela</span></div>
+
+<div class="search">
+<input id="search" placeholder="Book, Subject या Class खोजें...">
+</div>
+
+<button class="navBtn" onclick="scrollAI()">🤖 AI Teacher</button>
+</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<h1>🎓 Samsela Smart Learning</h1>
+<p>
+Books, Chapters, Lessons, Quiz और Firebase Gemini AI Teacher —
+सब एक ही जगह।
+</p>
+
+<div class="heroStats">
+<div class="stat"><b>25</b>Books</div>
+<div class="stat"><b>5</b>Classes</div>
+<div class="stat"><b>5</b>Subjects</div>
+<div class="stat"><b>🤖</b>AI Teacher</div>
+</div>
+</section>
+
+<div class="filters" id="filters"></div>
+
+<section class="grid" id="books"></section>
+
+<section class="aiSection" id="aiTeacher">
+
+<div class="aiHeader">
+<div class="aiAvatar">👩‍🏫</div>
+<div>
+<h2>Samsela AI Teacher</h2>
+<small>पूछिए • समझिए • सीखिए</small>
+</div>
+</div>
+
+<div class="status" id="aiStatus">
+🟢 Firebase AI Teacher तैयार हो रहा है...
+</div>
+
+<div class="chat" id="chat">
+<div class="message ai">
+नमस्ते! 👋 मैं Samsela AI Teacher हूँ।
+
+आप Maths, Science, English, Hindi, GK या किसी भी पढ़ाई के सवाल के बारे में पूछ सकते हैं।
+</div>
+</div>
+
+<div class="aiInput">
+<input id="question" placeholder="अपना सवाल लिखें...">
+<button class="aiButton" onclick="askTeacher()">पूछें</button>
+</div>
+
+<div class="voiceButtons">
+<button onclick="startVoice()">🎙️ बोलकर पूछें</button>
+<button onclick="speakLast()">🔊 उत्तर सुनें</button>
+<button onclick="stopVoice()">⏹ Stop</button>
+</div>
+
+</section>
+</main>
+
+<div class="modal" id="readerModal">
+<div class="reader">
+
+<div class="readerTop">
+<h2 id="readerTitle">Book</h2>
+<button class="close" onclick="closeReader()">✕</button>
+</div>
+
+<div class="readerBody">
+
+<aside class="chapterList" id="chapterList"></aside>
+
+<section class="readerContent">
+
+<div class="page" id="bookPage"></div>
+
+<div class="readerControls">
+<button class="secondary" onclick="previousPage()">← Previous</button>
+<button class="primary" onclick="nextPage()">Next →</button>
+<button class="secondary" onclick="readCurrentPage()">🔊 Read</button>
+<button class="secondary" onclick="completeChapter()">✓ Complete</button>
+</div>
+
+<div class="progress">
+<div class="progressBar" id="progressBar"></div>
+</div>
+
+<div id="quiz"></div>
+
+</section>
+</div>
+</div>
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+   FIREBASE
+   ========================================================= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+import {
+ getAI,
+ getGenerativeModel,
+ GoogleAIBackend
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-ai.js";
+
+
+const firebaseConfig = {
+ apiKey: "AIzaSyAcIUaYi5wYKkWz3DAzMdbKm5hr802Fu14",
+ authDomain: "samsela.firebaseapp.com",
+ projectId: "samsela",
+ storageBucket: "samsela.firebasestorage.app",
+ messagingSenderId: "807319101847",
+ appId: "1:807319101847:web:970e3b035b35a304b5a4d2"
+};
+
+
+/* Firebase शुरू */
+const firebaseApp = initializeApp(firebaseConfig);
+
+
+/* Firebase AI Logic */
+const firebaseAI =
+ getAI(firebaseApp,{
+   backend:new GoogleAIBackend()
+ });
+
+
+/* Gemini model */
+const aiModel =
+ getGenerativeModel(firebaseAI,{
+   model:"gemini-3.6-flash",
+   systemInstruction:
+   `You are Samsela AI Teacher.
+   Teach children in simple Hindi.
+   You can also explain English and Maths.
+   Give step-by-step answers.
+   Keep answers age appropriate.
+   If a child asks a school question, explain clearly with examples.
+   Never pretend to know information you do not know.`
+ });
+
+
+window.samselaAI = aiModel;
+
+document.getElementById("aiStatus").textContent =
+ "🟢 Firebase Gemini AI Teacher Connected";
+
+
+/* =========================================================
+   BOOK DATABASE
+   ========================================================= */
+
+function createChapters(subject,classNo){
+
+ const topics = {
+  Hindi:[
+   "वर्ण और शब्द",
+   "मात्राएँ",
+   "संज्ञा",
+   "सर्वनाम",
+   "वाक्य"
+  ],
+  English:[
+   "Alphabet",
+   "Words",
+   "Nouns",
+   "Pronouns",
+   "Sentences"
+  ],
+  Mathematics:[
+   "Numbers",
+   "Addition",
+   "Subtraction",
+   "Multiplication",
+   "Division"
+  ],
+  Science:[
+   "Living Things",
+   "Plants",
+   "Animals",
+   "Water",
+   "Our Environment"
+  ],
+  GK:[
+   "India",
+   "World",
+   "Animals",
+   "Sports",
+   "General Knowledge"
+  ]
+ };
+
+ return topics[subject].map((topic,i)=>({
+   id:i+1,
+   title:"Chapter "+(i+1)+" • "+topic,
+   pages:[],
+   quiz:[{
+     question:"इस chapter को सीखने का सबसे अच्छा तरीका क्या है?",
+     options:[
+       "ध्यान से पढ़ना और समझना",
+       "बिना पढ़े छोड़ देना",
+       "कुछ भी नहीं करना",
+       "सिर्फ book बंद करना"
+     ],
+     answer:0
+   }]
+ }));
+
+}
+
+
+const subjects=[
+ {
+  name:"Hindi",
+  icon:"📕"
+ },
+ {
+  name:"English",
+  icon:"📘"
+ },
+ {
+  name:"Mathematics",
+  icon:"📐"
+ },
+ {
+  name:"Science",
+  icon:"🔬"
+ },
+ {
+  name:"GK",
+  icon:"🌍"
+ }
+];
+
+
+const BOOKS=[];
+
+let id=1;
+
+for(let c=1;c<=5;c++){
+
+ subjects.forEach(s=>{
+
+  BOOKS.push({
+   id:id++,
+   class:c,
+   subject:s.name,
+   icon:s.icon,
+   title:s.name+" • Class "+c,
+   chapters:createChapters(s.name,c)
+  });
+
+ });
+
+}
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let selectedClass="All";
+let selectedSubject="All";
+
+let currentBook=null;
+let currentChapter=0;
+let currentPage=0;
+let lastAnswer="";
+
+
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+const filters=document.getElementById("filters");
+
+
+function makeFilters(){
+
+ filters.innerHTML="";
+
+ addFilter("All","All Classes");
+
+ for(let i=1;i<=5;i++){
+   addFilter("Class "+i,"Class "+i);
+ }
+
+ subjects.forEach(s=>{
+   addFilter("Subject:"+s.name,s.name);
+ });
+
+}
+
+
+function addFilter(value,text){
+
+ const button=document.createElement("button");
+
+ button.className="filter";
+
+ if(value==="All"){
+   button.classList.add("active");
+ }
+
+ button.textContent=text;
+
+ button.onclick=()=>{
+
+  document
+   .querySelectorAll(".filter")
+   .forEach(x=>x.classList.remove("active"));
+
+  button.classList.add("active");
+
+  if(value==="All"){
+   selectedClass="All";
+   selectedSubject="All";
+  }
+  else if(value.startsWith("Class")){
+   selectedClass=value.split(" ")[1];
+   selectedSubject="All";
+  }
+  else{
+   selectedClass="All";
+   selectedSubject=value.split(":")[1];
+  }
+
+  renderBooks();
+ };
+
+ filters.appendChild(button);
+}
+
+
+/* =========================================================
+   BOOK DISPLAY
+   ========================================================= */
+
+function renderBooks(){
+
+ const search=
+ document.getElementById("search")
+ .value
+ .toLowerCase()
+ .trim();
+
+ const box=document.getElementById("books");
+
+ const list=BOOKS.filter(book=>{
+
+  const classOK=
+   selectedClass==="All" ||
+   String(book.class)===selectedClass;
+
+  const subjectOK=
+   selectedSubject==="All" ||
+   book.subject===selectedSubject;
+
+  const searchOK=
+   !search ||
+   book.title.toLowerCase().includes(search) ||
+   book.subject.toLowerCase().includes(search) ||
+   ("class "+book.class).includes(search);
+
+  return classOK && subjectOK && searchOK;
+ });
+
+ box.innerHTML="";
+
+ list.forEach(book=>{
+
+  const card=document.createElement("article");
+
+  card.className="book";
+
+  card.innerHTML=`
+   <div class="bookIcon">${book.icon}</div>
+   <div class="bookClass">CLASS ${book.class}</div>
+   <h3>${book.title}</h3>
+   <p>${book.chapters.length} Chapters • Lessons • Quiz</p>
+   <span class="tag">${book.subject}</span>
+  `;
+
+  card.onclick=()=>openBook(book.id);
+
+  box.appendChild(card);
+ });
+
+ if(!list.length){
+
+  box.innerHTML=`
+   <div style="
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    text-align:center;
+    grid-column:1/-1">
+    कोई book नहीं मिली।
+   </div>
+  `;
+ }
+}
+
+
+/* =========================================================
+   BOOK READER
+   ========================================================= */
+
+function openBook(id){
+
+ currentBook=BOOKS.find(book=>book.id===id);
+ currentChapter=0;
+ currentPage=0;
+
+ document.getElementById("readerTitle").textContent=
+  currentBook.icon+" "+currentBook.title;
+
+ document.getElementById("readerModal").classList.add("show");
+
+ renderChapters();
+ renderPage();
+}
+
+
+function renderChapters(){
+
+ const box=document.getElementById("chapterList");
+
+ box.innerHTML="";
+
+ currentBook.chapters.forEach((chapter,index)=>{
+
+  const button=document.createElement("button");
+
+  button.className=
+   "chapter "+(index===currentChapter?"active":"");
+
+  button.innerHTML=`
+   📖 ${chapter.title}
+   <br>
+   <small>Lesson + Quiz</small>
+  `;
+
+  button.onclick=()=>{
+
+   currentChapter=index;
+   currentPage=0;
+
+   renderChapters();
+   renderPage();
+  };
+
+  box.appendChild(button);
+ });
+}
+
+
+function renderPage(){
+
+ const chapter=currentBook.chapters[currentChapter];
+
+ const page=document.getElementById("bookPage");
+
+ page.innerHTML=`
+  <div style="text-align:center;padding:30px">
+   <div style="font-size:65px">📚</div>
+
+   <h2>${chapter.title}</h2>
+
+   <p style="
+    margin-top:14px;
+    color:#667085;
+    line-height:1.7">
+    इस lesson को Samsela AI Teacher के साथ सीखें।
+    <br>
+    नीचे दिए गए Quiz को भी पूरा करें।
+   </p>
+
+   <button
+    onclick="askLesson('${chapter.title.replaceAll("'","")}')"
+    style="
+     margin-top:20px;
+     border:0;
+     background:#5b21b6;
+     color:white;
+     padding:13px 18px;
+     border-radius:12px;
+     font-weight:800">
+    🤖 इस Lesson को AI से समझें
+   </button>
+  </div>
+ `;
+
+ document.getElementById("progressBar").style.width="100%";
+
+ renderQuiz();
+}
+
+
+window.askLesson=function(title){
+
+ scrollAI();
+
+ document.getElementById("question").value=
+  "मुझे "+title+" Class "+currentBook.class+
+  " के level पर आसान हिंदी में समझाओ।";
+
+ askTeacher();
+};
+
+
+function nextPage(){}
+
+function previousPage(){}
+
+
+function closeReader(){
+
+ document.getElementById("readerModal")
+ .classList.remove("show");
+}
+
+
+function readCurrentPage(){
+
+ const chapter=currentBook.chapters[currentChapter];
+
+ speak(
+  chapter.title+
+  "। इस lesson को Samsela AI Teacher के साथ आसान तरीके से सीख सकते हैं।"
+ );
+}
+
+
+function completeChapter(){
+
+ localStorage.setItem(
+  "completed-"+currentBook.id+"-"+currentChapter,
+  "yes"
+ );
+
+ speak("बहुत बढ़िया! आपने chapter complete कर लिया है।");
+}
+
+
+/* =========================================================
+   QUIZ
+   ========================================================= */
+
+function renderQuiz(){
+
+ const box=document.getElementById("quiz");
+
+ const questions=
+  currentBook.chapters[currentChapter].quiz;
+
+ box.innerHTML="";
+
+ questions.forEach((question,qIndex)=>{
+
+  const div=document.createElement("div");
+
+  div.className="quiz";
+
+  div.innerHTML=`
+   <h3>📝 Quick Quiz</h3>
+   <p style="margin-top:10px">
+    ${qIndex+1}. ${question.question}
+   </p>
+  `;
+
+  question.options.forEach((option,oIndex)=>{
+
+   const btn=document.createElement("button");
+
+   btn.className="option";
+   btn.textContent=option;
+
+   btn.onclick=()=>{
+
+    if(oIndex===question.answer){
+
+     btn.style.borderColor="#22c55e";
+     btn.style.background="#dcfce7";
+
+     speak("सही जवाब! बहुत बढ़िया।");
+
+    }else{
+
+     btn.style.borderColor="#ef4444";
+     btn.style.background="#fee2e2";
+
+     speak("यह जवाब सही नहीं है। फिर से सोचिए।");
+    }
+   };
+
+   div.appendChild(btn);
+  });
+
+  box.appendChild(div);
+ });
+}
+
+
+/* =========================================================
+   REAL FIREBASE GEMINI AI
+   ========================================================= */
+
+async function askTeacher(){
+
+ const input=document.getElementById("question");
+
+ const question=input.value.trim();
+
+ if(!question)return;
+
+ addMessage(question,"user");
+
+ input.value="";
+
+ const loadingId="loading-"+Date.now();
+
+ addMessage("🤖 सोच रही हूँ...","ai",loadingId);
+
+ try{
+
+  const prompt=
+  `Student question:
+  ${question}
+
+  Answer in simple Hindi.
+  If the question is Maths, show steps.
+  If it is English, give examples.
+  If it is Science or GK, explain simply.
+  Keep the answer suitable for a school student.`;
+
+  const result=
+   await window.samselaAI.generateContent(prompt);
+
+  const response=result.response;
+
+  const text=response.text();
+
+  removeMessage(loadingId);
+
+  lastAnswer=text;
+
+  addMessage(text,"ai");
+
+  speak(text);
+
+ }catch(error){
+
+  console.error(error);
+
+  removeMessage(loadingId);
+
+  let message=
+   "AI से जवाब नहीं मिल पाया। ";
+
+  if(error?.message){
+
+   message+=
+    "Firebase error: "+
+    error.message;
+  }
+
+  addMessage(message,"ai");
+
+  document.getElementById("aiStatus").textContent=
+   "🔴 Firebase AI error — Firebase Console में App Check/API settings देखें।";
+ }
+}
+
+
+function addMessage(text,type,id=""){
+
+ const chat=document.getElementById("chat");
+
+ const div=document.createElement("div");
+
+ div.className="message "+type;
+
+ if(id)div.id=id;
+
+ div.textContent=text;
+
+ chat.appendChild(div);
+
+ chat.scrollTop=chat.scrollHeight;
+}
+
+
+function removeMessage(id){
+
+ const el=document.getElementById(id);
+
+ if(el)el.remove();
+}
+
+
+/* =========================================================
+   VOICE
+   ========================================================= */
+
+function speak(text){
+
+ if(!("speechSynthesis" in window))return;
+
+ speechSynthesis.cancel();
+
+ const utterance=
+  new SpeechSynthesisUtterance(text);
+
+ utterance.lang="hi-IN";
+ utterance.rate=.9;
+ utterance.pitch=1.05;
+
+ const voices=speechSynthesis.getVoices();
+
+ const hindiVoice=
+  voices.find(v=>
+   v.lang &&
+   v.lang.toLowerCase().startsWith("hi")
+  );
+
+ if(hindiVoice){
+   utterance.voice=hindiVoice;
+ }
+
+ speechSynthesis.speak(utterance);
+}
+
+
+function speakLast(){
+
+ if(lastAnswer)speak(lastAnswer);
+}
+
+
+function stopVoice(){
+
+ if("speechSynthesis" in window){
+   speechSynthesis.cancel();
+ }
+}
+
+
+function startVoice(){
+
+ const SpeechRecognition=
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
+
+ if(!SpeechRecognition){
+
+  addMessage(
+   "Voice input इस browser में उपलब्ध नहीं है। Chrome इस्तेमाल करें।",
+   "ai"
+  );
+
+  return;
+ }
+
+ const recognition=new SpeechRecognition();
+
+ recognition.lang="hi-IN";
+ recognition.interimResults=false;
+ recognition.continuous=false;
+
+ addMessage(
+  "🎙️ सुन रही हूँ... बोलिए।",
+  "ai"
+ );
+
+ recognition.onresult=(event)=>{
+
+  const text=
+   event.results[0][0].transcript;
+
+  document.getElementById("question").value=text;
+
+  askTeacher();
+ };
+
+ recognition.onerror=()=>{
+
+  addMessage(
+   "आवाज़ साफ़ नहीं मिली। फिर से बोलें।",
+   "ai"
+  );
+ };
+
+ recognition.start();
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+document.getElementById("search")
+.addEventListener("input",renderBooks);
+
+document.getElementById("question")
+.addEventListener("keydown",(event)=>{
+
+ if(event.key==="Enter"){
+   askTeacher();
+ }
+});
+
+
+function scrollAI(){
+
+ document.getElementById("aiTeacher")
+ .scrollIntoView({
+  behavior:"smooth"
+ });
+}
+
+
+/* =========================================================
+   START WEBSITE
+   ========================================================= */
+
+makeFilters();
+renderBooks();
+
+</script>
+
+</body>
+</html>
